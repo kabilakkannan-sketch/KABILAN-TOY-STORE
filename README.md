@@ -1,4 +1,4 @@
-# 🧸 TinyToys - Premium Kids E-Commerce Platform
+# 🧸 KK SHOPPING - Premium Kids E-Commerce Platform
 
 A comprehensive, full-stack E-Commerce web application designed for ordering kids' toys and interactive electronics. This platform delivers a seamless shopping experience for users while offering a data-driven analytical dashboard for administrators to monitor business metrics.
 
