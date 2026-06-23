@@ -28,8 +28,8 @@ A comprehensive, full-stack E-Commerce web application designed for ordering kid
 
 ## 🔐 Demo Credentials
 > 💡 **Note for HR / Technical Interviewers:** To evaluate the structural functionalities of both the User Side and the Administrative Panels locally, you may utilize the pre-configured credential data:
-* **Admin Username:** `admin`
-* **Admin Password:** `admin123` *(Kindly replace this with your actual local demo password)*
+* **Admin Username:** `kabilan`
+* **Admin Password:** `1234` *(Kindly replace this with your actual local demo password)*
 
 ## 🏃‍♂️ Local Setup Instructions
 To run this project locally, execute the following commands sequentially in your terminal:
