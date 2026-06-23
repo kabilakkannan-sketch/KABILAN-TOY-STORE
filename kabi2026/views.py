@@ -1,7 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-#from kabi2026.models import admin
 from kabi2026.models import *
-from kabi2026.models import Wallet
 from django.contrib import messages
 from django.db.models import Sum
 import json
@@ -10,7 +8,6 @@ from collections import Counter
 import uuid
 from django.http import JsonResponse
 from django.shortcuts import render
-from .models import ProductReview
 from django.db.models import Count, Avg, Q
 
 def user_home(request):
@@ -111,8 +108,6 @@ def admin_page(request):
             category=request.POST["category"]
         )
         images = request.FILES.getlist("photo")
-
-        # Save all images in ItemImages table
         for img in images:
             ItemImages.objects.create(
                 item=item,
@@ -122,7 +117,6 @@ def admin_page(request):
 
 @admin_login_required
 def admin_home(request):
-    # 1. செயலில் உள்ள அரட்டைகளை எடுத்தல்
     active_chats = ChatMessage.objects.filter(sender='user').values('user_id', 'product_id').annotate(
         latest_msg=Max('created_at')
     ).order_by('-latest_msg')
@@ -139,26 +133,18 @@ def admin_home(request):
             })
         except Items.DoesNotExist:
             continue
-
-    # 2. அனைத்துப் பொருட்களையும் எடுத்தல் (Inventory)
     data = Items.objects.all()
-
-    # 3. ORDERS அட்டவணையை அடிப்படையாகக் கொண்ட வரைபட மற்றும் கணக்கீட்டுத் தரவுகள்
     orders = Orders.objects.all().order_by("created_at")
     total_orders = orders.count()
     total_revenue = 0
     daily_sales = {}
     products = []
-
     for i in orders:
         try:
             price = int(i.price)
         except:
             price = 0
-
-        total_revenue += price
-        
-        # வரைபடத்திற்கான தேதியை வடிவமைத்தல்
+        total_revenue += price        
         day = i.created_at.strftime("%d-%m-%Y") if i.created_at else "Unknown"
         if day not in daily_sales:
             daily_sales[day] = 0
@@ -173,8 +159,6 @@ def admin_home(request):
     most_sold = "No Orders"
     if products:
         most_sold = Counter(products).most_common(1)[0][0]
-
-    # அனைத்துத் தரவுகளையும் ஒரே பக்கத்திற்கு அனுப்புதல்
     context = {
         'chat_data': chat_data, 
         'data': data,
