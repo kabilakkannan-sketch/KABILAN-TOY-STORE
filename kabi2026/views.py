@@ -188,6 +188,8 @@ def admin_home(request):
     return render(request, 'admin_home.html', context)
 
 def view_item(request,id):
+    if not request.session.get('user_id'):
+        return redirect('user_login')
     data = Items.objects.get(id=id)
     images = ItemImages.objects.filter(item=data)
     return render(request,'view_item.html',{'data':data,'images':images})
