@@ -1,0 +1,40 @@
+        body {
+            background-color: #f8fafc;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .top-product-card {
+            background: linear-gradient(135deg, #ffffff, #fdfbf7);
+            border: 2px solid #ffeaa7;
+            border-radius: 14px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+        }
+        .review-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            transition: box-shadow 0.2s ease;
+        }
+        .review-card:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+        .star-filled {
+            color: #ffb800;
+        }
+        .star-empty {
+            color: #cbd5e1;
+        }
+        .product-img {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+        }
+        .top-badge {
+            background-color: #6c5ce7;
+            color: white;
+            font-size: 11px;
+            padding: 4px 8px;
+            border-radius: 6px;
+        }

@@ -1,0 +1,160 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>My Orders</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="{% static 'css/user_order_view_by_user.css' %}">
+</head>
+<body>
+
+<a href="javascript:history.back()" 
+   style="display: inline-flex; 
+          align-items: center; 
+          gap: 8px; 
+          padding: 10px 18px; 
+          background-color: #ffffff; 
+          color: #333333; 
+          text-decoration: none; 
+          font-family: 'Poppins', sans-serif; 
+          font-size: 14px;
+          margin-top: 20px;
+          margin-left: 20px;
+          font-weight: 600; 
+          border-radius: 12px; 
+          border: 1px solid #e5e7eb; 
+          box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.06); 
+          cursor: pointer; 
+          transition: all 0.2s ease;
+          margin-bottom: 20px;"
+   onmouseover="this.style.backgroundColor='#f3f4f6'; this.style.transform='translateY(-1px)'; this.style.boxShadow='0 10px 15px -3px rgba(0, 0, 0, 0.1)';" 
+   onmouseout="this.style.backgroundColor='#ffffff'; this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 6px -1px rgba(0, 0, 0, 0.05)';"
+   onmousedown="this.style.transform='scale(0.98)';">
+    <i class="fa-solid fa-arrow-left" style="font-size: 14px; color: #4f46e5;"></i> 
+    Back
+</a>
+
+<h2>My Orders</h2>
+
+<table>
+<tr>
+    <th>Product Name</th>
+    <th>Photo</th>
+    <th>Order Quantity</th>
+    <th>User Quantity</th>
+    <th>Price</th>
+    <th>Status</th>
+</tr>
+
+{% for i in data %}
+<tr>
+    <td>{{ i.product_name }}</td>
+    <td><img src="{{ i.product_photo.url }}"></td>
+    <td>{{ i.order_quantity }}</td>
+    <td>{{ i.user_quantity }}</td>
+    <td>{{ i.price }}</td>
+    <td>
+        {{ i.status }}
+
+        {% if i.action_status != 'delivered' and i.action_status != 'cancelled' and i.action_status != 'returned' %}
+            <br><a class="cancel-btn" href="#" data-url="{% url 'cancel_order' i.id %}" onclick="openModal(event, this, 'cancel')">Cancel</a>
+        {% endif %}
+
+        {% if i.action_status == 'delivered' %}
+            
+            {% if i.is_return_valid or not i.delivered_at %}
+                <br><a class="return-btn" href="#" data-url="{% url 'return_order' i.id %}" onclick="openModal(event, this, 'return')">Return</a>
+            {% else %}
+                <br><span class="expired-badge">Return policy expired (10 Days)</span>
+            {% endif %}
+            
+            {% if i.review %}
+                <br><span class="rated-badge">
+                    <i class="fa-solid fa-star" style="color: #ffb800;"></i> Rated {{ i.review.rating }}/5
+                </span>
+            {% else %}
+                <br><a class="rate-btn" href="{% url 'submit_product_rating' order_id=i.id %}">
+                    <i class="fa-solid fa-star-half-stroke"></i> Rate
+                </a>
+            {% endif %}
+        {% endif %}
+
+        {% if i.action_status == 'cancelled' %}
+            <span class="status-text cancelled">Cancelled</span>
+        {% endif %}
+
+        {% if i.action_status == 'returned' %}
+            <span class="status-text returned">Returned</span>
+        {% endif %}
+    </td>
+</tr>
+{% empty %}
+<tr>
+    <td colspan="6">No orders found</td>
+</tr>
+{% endfor %}
+</table>
+
+<div class="custom-modal-overlay" id="confirmModal">
+    <div class="custom-modal">
+        <div id="modalIcon" class="modal-icon"></div>
+        <h3 id="modalTitle">Confirm Action</h3>
+        <p id="modalMessage">Are you sure you want to proceed?</p>
+        <div class="modal-actions">
+            <button class="modal-btn modal-btn-close" onclick="closeModal()">No, Keep it</button>
+            <a id="modalConfirmLink" href="#" class="modal-btn modal-btn-confirm">Yes, Proceed</a>
+        </div>
+    </div>
+</div>
+
+<script>
+let activeUrl = "";
+
+function openModal(event, element, type) {
+    event.preventDefault(); 
+    activeUrl = element.getAttribute('data-url'); 
+    
+    const modal = document.getElementById('confirmModal');
+    const icon = document.getElementById('modalIcon');
+    const title = document.getElementById('modalTitle');
+    const message = document.getElementById('modalMessage');
+    const confirmBtn = document.getElementById('modalConfirmLink');
+    
+    icon.className = "modal-icon";
+    confirmBtn.className = "modal-btn modal-btn-confirm";
+    
+    if(type === 'return') {
+        icon.classList.add('return');
+        icon.innerHTML = '<i class="fa-solid fa-circle-arrow-left"></i>';
+        title.innerText = "Return Product?";
+        message.innerText = "Do you really want to return this product? This action will process product reversal workflow.";
+        confirmBtn.classList.add('return-theme');
+        confirmBtn.innerText = "Yes, Return";
+    } else if(type === 'cancel') {
+        icon.classList.add('cancel');
+        icon.innerHTML = '<i class="fa-solid fa-circle-xmark"></i>';
+        title.innerText = "Cancel Order?";
+        message.innerText = "Are you absolutely sure you want to cancel this package order?";
+        confirmBtn.classList.add('cancel-theme');
+        confirmBtn.innerText = "Yes, Cancel";
+    }
+    
+    confirmBtn.href = activeUrl;
+    modal.classList.add('active');
+}
+
+function closeModal() {
+    document.getElementById('confirmModal').classList.remove('active');
+}
+
+document.getElementById('confirmModal').addEventListener('click', function(e) {
+    if(e.target === this) {
+        closeModal();
+    }
+});
+</script>
+
+</body>
+</html>

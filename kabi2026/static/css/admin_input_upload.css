@@ -1,0 +1,35 @@
+        body {
+            background: #f4f6fb;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; /* படிவம் நீளமாகும்போது எர்ரர் வராமல் தடுக்க height-ல் இருந்து min-height ஆக மாற்றப்பட்டுள்ளது */
+            padding: 20px 0;
+        }
+
+        .form-card {
+            width: 420px;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .form-title {
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .form-control, .form-select {
+            margin-bottom: 12px;
+        }
+
+        .submit-btn {
+            background: #6f42c1;
+            border: none;
+        }
+
+        .submit-btn:hover {
+            background: #5936a3;
+        }

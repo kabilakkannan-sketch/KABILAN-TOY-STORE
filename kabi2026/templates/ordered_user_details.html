@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ordered User Details</title>
+
+    <style>
+        body{
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .card{
+            background-color: white;
+            width: 400px;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+
+        h2{
+            text-align: center;
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+
+        p{
+            font-size: 16px;
+            margin: 12px 0;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 8px;
+        }
+
+        strong{
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h2>User Details</h2>
+
+    <p><strong>Name:</strong> {{ user_data.user_name }}</p>
+    <p><strong>Phone:</strong> {{ user_data.phone_number }}</p>
+    <p><strong>Address:</strong> {{ user_data.address }}</p>
+    <p><strong>District:</strong> {{ user_data.district }}</p>
+    <p><strong>State:</strong> {{ user_data.state }}</p>
+    <p><strong>Product:</strong> {{ data.product_name }}</p>
+<button onclick="window.print()">Print</button>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,26 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/update_admin.css' %}">
+
+</head>
+<body>
+    <form action="#" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <img src="{{ data.photo.url }}" alt="" width="100"><br><br>
+        <input type="file" name="photo"><br><br>
+        <input type="text" name="toy_name" value="{{ data.toy_name }}">
+        <input type="text" name="order_qty" value="{{data.order_qty}}">
+        <input type="text" name="old_price" value="{{data.old_price}}">
+        <input type="text" name="new_price" value="{{data.new_price}}">
+        <input type="text" name="offer" value="{{data.offer}}">
+        <input type="text" name="discription" value="{{data.discription}}">
+        <input type="submit" value="update">
+        
+    </form>
+</body>
+</html>

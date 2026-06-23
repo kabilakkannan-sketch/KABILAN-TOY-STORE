@@ -1,0 +1,62 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Toy</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/admin_input_upload.css' %}">
+</head>
+
+<body>
+
+<div class="form-card">
+
+    <h4 class="form-title">🧸 Add Toy Product</h4>
+
+    <form action="{% url 'admin_page' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <label class="form-label">Toy Category</label>
+        <select class="form-select" name="category" required>
+            <option value="" disabled selected>Select Category</option>
+            <option value="sports">Sports Toys</option>
+            <option value="ai">AI Toys</option>
+            <option value="sleeping">Sleeping Toys</option>
+            <option value="anime">Anime Toys</option>
+            <option value="robotic">Robotic Toys</option>
+        </select>
+
+        <label class="form-label">Toy Image</label>
+        <input type="file" class="form-control" name="photo" multiple required>
+
+        <label class="form-label">Toy Name</label>
+        <input type="text" class="form-control" name="toy_name" required>
+
+        <label class="form-label">Quantity</label>
+        <input type="number" class="form-control" name="qty" required>
+
+        <label class="form-label">Old Price</label>
+        <input type="number" class="form-control" name="old_price" required>
+
+        <label class="form-label">New Price</label>
+        <input type="number" class="form-control" name="new_price" required>
+
+        <label class="form-label">Offer (%)</label>
+        <input type="number" class="form-control" name="offer" required>
+
+        <label class="form-label">Description</label>
+        <textarea class="form-control" name="discription" rows="3" required></textarea>
+
+        <button type="submit" class="btn submit-btn w-100 mt-3">
+            Add Product
+        </button>
+
+    </form>
+
+</div>
+
+</body>
+</html>

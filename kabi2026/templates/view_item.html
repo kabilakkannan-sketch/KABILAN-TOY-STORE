@@ -1,0 +1,190 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ data.toy_name }}</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/view_item.css' %}">
+</head>
+<body>
+
+
+    <div class="container-fluid px-4 d-flex justify-content-between align-items-center mt-3">
+        <!-- Back Operation -->
+        <a href="javascript:history.back()" 
+           style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; background-color: #ffffff; color: #333333; text-decoration: none; font-size: 14px; font-weight: 600; border-radius: 12px; border: 1px solid #cbd5e1; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); cursor: pointer; transition: all 0.2s ease;"
+           onmouseover="this.style.backgroundColor='#f1f5f9'; this.style.transform='translateY(-1px)';" 
+           onmouseout="this.style.backgroundColor='#ffffff'; this.style.transform='translateY(0)';"
+           onmousedown="this.style.transform='scale(0.98)';">
+            <i class="fa-solid fa-arrow-left" style="color: var(--primary-accent);"></i> Back
+        </a>
+
+        <a href="{% url 'conversation_user' data.id request.session.user_id %}"
+           style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; background-color: #ffffff; color: #4f46e5; text-decoration: none; font-size: 14px; font-weight: 700; border-radius: 12px; border: 2px solid #e0e7ff; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); cursor: pointer; transition: all 0.2s ease;"
+           onmouseover="this.style.backgroundColor='#eff6ff'; this.style.transform='translateY(-1px)';" 
+           onmouseout="this.style.backgroundColor='#ffffff'; this.style.transform='translateY(0)';"
+           onmousedown="this.style.transform='scale(0.98)';">
+            <i class="fa-solid fa-circle-question"></i> Ask a Question?
+        </a>
+    </div>
+
+    <!-- NOTIFICATION SYSTEM -->
+    <div id="customAlert" class="custom-alert success">
+        <div class="alert-icon" id="alertIcon">✓</div>
+        <div class="alert-content">
+            <div class="alert-title" id="alertTitle">Success</div>
+            <div class="alert-message" id="alertMessage">Product added</div>
+        </div>
+        <button class="close-alert" onclick="closeAlert()">×</button>
+        <div class="alert-progress"><span></span></div>
+    </div>
+
+    <!-- MAIN INTERFACE PLATFORM -->
+    <div class="container py-4">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="product-box">
+                    <div class="row align-items-center">
+                        
+                        <!-- SLIDER CAROUSEL PORTAL -->
+                        <div class="col-md-5">
+                            <div class="image-box">
+                                <div id="toyCarousel" class="carousel slide" data-bs-ride="carousel">
+                                    <div class="carousel-inner">
+                                        <div class="carousel-item active">
+                                            <img src="{{ data.photo.url }}" class="d-block w-100 product-img" alt="Product Image" data-bs-toggle="modal" data-bs-target="#zoomModal" onclick="showZoom('{{ data.photo.url }}')">
+                                        </div>
+                                        {% for i in images %}
+                                        <div class="carousel-item">
+                                            <img src="{{ i.image.url }}" class="d-block w-100 product-img" data-bs-toggle="modal" data-bs-target="#zoomModal" onclick="showZoom('{{ i.image.url }}')">
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                    <button class="carousel-control-prev" type="button" data-bs-target="#toyCarousel" data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon"></span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button" data-bs-target="#toyCarousel" data-bs-slide="next">
+                                        <span class="carousel-control-next-icon"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- SPECIFICATIONS ENGINE -->
+                        <div class="col-md-7 ps-md-5 mt-4 mt-md-0">
+                            <h2 class="mb-2">{{ data.toy_name }}</h2>
+                            <p class="text-muted mb-4">{{ data.discription|default:"No description provided for this magical toy." }}</p>
+                            
+                            <div class="d-flex align-items-baseline gap-2 mb-1">
+                                <span class="price-old">₹{{ data.old_price }}</span>
+                                <span class="offer">{{ data.offer }}% OFF</span>
+                            </div>
+                            <h2 class="price-new mb-3">₹{{ data.new_price }}</h2>
+                            
+                            <p class="text-dark fw-semibold mb-4" style="font-size: 14.5px;">
+                                <i class="fa-solid fa-layer-group text-secondary me-1"></i> Stock Status: 
+                                <span class="badge bg-light text-dark border fw-bold px-2 py-1">{{ data.order_qty }} available</span>
+                            </p>
+
+                            <!-- PIPELINE ACTION OPERATIONS -->
+                            <div class="d-flex flex-column gap-2">
+                                {% if request.session.user_id %}
+                                <a href="{% url 'order_input_get_from_user' data.id %}" class="btn buy-btn w-100 text-white shadow-sm">
+                                    <i class="fa-solid fa-bolt me-1"></i> Buy It Now
+                                </a>
+                                {% else %}
+                                <button class="btn buy-btn w-100 text-white shadow-sm" onclick="showAlert('error','Login Required','Please login first to buy products')">
+                                    <i class="fa-solid fa-bolt me-1"></i> Buy It Now
+                                </button>
+                                {% endif %}
+
+                                <button onclick="addToCart('{{data.id}}')" class="btn cart-btn w-100">
+                                    <i class="fa-solid fa-basket-shopping me-1"></i> Add To Cart
+                                </button>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- HIGH PROFILE RESOLUTION ZOOM LAYER -->
+    <div class="modal fade" id="zoomModal" tabindex="-1">
+        <button type="button" class="btn btn-light position-absolute top-0 end-0 m-3 fs-5 fw-bold rounded-circle shadow" data-bs-dismiss="modal" style="width:50px; height:50px; z-index:9999; color:white; background-color:#ef4444; border: none;">✕</button>
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content bg-dark border-0 position-relative" style="border-radius: 16px; overflow: hidden;">
+                <div class="zoom-controls">
+                    <button class="zoom-btn" onclick="zoomIn()"><i class="fa-solid fa-plus"></i></button>
+                    <button class="zoom-btn" onclick="zoomOut()"><i class="fa-solid fa-minus"></i></button>
+                </div>
+                <div class="modal-body text-center p-4">
+                    <img id="zoomImage" src="" style="width:100%; max-height:85vh; object-fit:contain; transform:scale(1);">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- EVENT SCRIPTING LOGIC -->
+    <script>
+    function showAlert(type,title,message){
+        const alertBox = document.getElementById("customAlert");
+        const alertTitle = document.getElementById("alertTitle");
+        const alertMessage = document.getElementById("alertMessage");
+        const alertIcon = document.getElementById("alertIcon");
+
+        alertBox.classList.remove("success","error","show");
+        alertBox.classList.add(type);
+        alertTitle.innerText = title;
+        alertMessage.innerText = message;
+
+        if(type === "success") { alertIcon.innerHTML = "✓"; } else { alertIcon.innerHTML = "!"; }
+        setTimeout(() => { alertBox.classList.add("show"); }, 100);
+        
+        setTimeout(()=>{ alertBox.classList.remove("show"); },4000);
+    }
+
+     Aurora.closeAlert = function closeAlert(){
+        document.getElementById("customAlert").classList.remove("show");
+    }
+
+    function addToCart(id){
+        fetch("/add_to_cart/",{
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json",
+                "X-CSRFToken": "{{ csrf_token }}"
+            },
+            body:JSON.stringify({ product_id:id })
+        })
+        .then(response=>response.json())
+        .then(data=>{
+            if(data.success){
+                showAlert('success', 'Success', 'Product added to cart successfully!');
+            } else {
+                showAlert('error', 'Login Required', data.message);
+            }
+        })
+        .catch(error=>{
+            showAlert('error', 'Error', 'Something went wrong!');
+        });
+    }
+
+    let zoomLevel = 1;
+    function showZoom(img){
+        document.getElementById("zoomImage").src = img;
+        zoomLevel = 1;
+        document.getElementById("zoomImage").style.transform = `scale(${zoomLevel})`;
+    }
+    function zoomIn(){ zoomLevel += 0.25; document.getElementById("zoomImage").style.transform = `scale(${zoomLevel})`; }
+    function zoomOut(){ if(zoomLevel > 0.5){ zoomLevel -= 0.25; document.getElementById("zoomImage").style.transform = `scale(${zoomLevel})`; } }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

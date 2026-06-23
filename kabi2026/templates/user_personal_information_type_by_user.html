@@ -1,0 +1,101 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Register</title>
+
+    <style>
+        body{
+            margin:0;
+            padding:0;
+            font-family: Arial, sans-serif;
+            background-color:#f2f2f2;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            height:100vh;
+        }
+
+        .form-box{
+            background:white;
+            padding:30px;
+            border-radius:10px;
+            box-shadow:0 0 15px rgba(0,0,0,0.2);
+            width:350px;
+        }
+
+        .form-box h2{
+            text-align:center;
+            margin-bottom:20px;
+        }
+
+        .form-box input{
+            width:100%;
+            padding:10px;
+            margin-bottom:15px;
+            border:1px solid #ccc;
+            border-radius:5px;
+            box-sizing:border-box;
+        }
+
+        .form-box input[type="submit"]{
+            background-color:#007bff;
+            color:white;
+            border:none;
+            cursor:pointer;
+            font-size:16px;
+        }
+
+        .form-box input[type="submit"]:hover{
+            background-color:#0056b3;
+        }
+    </style>
+</head>
+<body>
+<a href="javascript:history.back()" 
+   style="display: inline-flex; 
+          align-items: center; 
+          gap: 8px; 
+          padding: 10px 18px; 
+          background-color: #ffffff; 
+          color: #333333; 
+          text-decoration: none; 
+          font-family: 'Poppins', sans-serif; 
+          font-size: 14px;
+          margin-top: 20px;
+          margin-left: 20px;
+          font-weight: 600; 
+          border-radius: 12px; 
+          border: 1px solid #e5e7eb; 
+          box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.06); 
+          cursor: pointer; 
+          transition: all 0.2s ease;
+          margin-bottom: 20px;"
+   onmouseover="this.style.backgroundColor='#f3f4f6'; this.style.transform='translateY(-1px)'; this.style.boxShadow='0 10px 15px -3px rgba(0, 0, 0, 0.1)';" 
+   onmouseout="this.style.backgroundColor='#ffffff'; this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 6px -1px rgba(0, 0, 0, 0.05)';"
+   onmousedown="this.style.transform='scale(0.98)';">
+    
+    <i class="fa-solid fa-arrow-left" style="font-size: 14px; color: #4f46e5;"></i> 
+    Back
+</a>
+    <div class="form-box">
+        <h2>User Register</h2>
+
+        <form action="#" method="post">
+            {% csrf_token %}
+
+            <input type="text" name="user_name" placeholder="Enter your name">
+            <input type="text" name="address" placeholder="Enter address">
+            <input type="text" name="district" placeholder="Enter district">
+            <input type="text" name="state" placeholder="Enter state">
+            <input type="number" name="phone_number" placeholder="Enter phone number">
+            <input type="password" name="password" placeholder="Enter password">
+            <input type="password" name="confirm_password" placeholder="Confirm password">
+            <input type="submit" value="Register">
+        </form>
+    </div>
+
+</body>
+</html>

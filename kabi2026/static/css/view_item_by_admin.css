@@ -1,0 +1,57 @@
+        body { 
+            background: #e2e8f0; /* மேலாளர் பக்கத்திற்கான அதே மங்கலான பின்புலம் */
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden; 
+        }
+        
+        .product-box { 
+            background: white; 
+            border-radius: 20px; 
+            padding: 30px; 
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15); 
+            border: 1px solid #cbd5e1;
+        }
+        
+        .image-box { 
+            background: #f8fafc; 
+            padding: 20px; 
+            border-radius: 16px; 
+            text-align: center; 
+            border: 1px solid #e2e8f0;
+        }
+        
+        .product-img { 
+            width: 100%; 
+            max-height: 400px; 
+            object-fit: contain; 
+            border-radius: 14px; 
+            cursor: pointer; 
+        }
+        
+        h2 { font-weight: 800; color: #0f172a; letter-spacing: -0.5px; }
+        
+        .price-old { text-decoration: line-through; color: #64748b; font-size: 18px; }
+        
+        .price-new { color: #4f46e5; font-size: 32px; font-weight: 800; }
+        
+        .offer { color: #16a34a; font-size: 18px; font-weight: 700; background: #dcfce7; display: inline-block; padding: 4px 12px; border-radius: 8px; }
+        
+        /* நிர்வாகி பொத்தான்களுக்கான பிரத்தியேக வடிவமைப்பு */
+        .admin-btn-update { background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; border-radius: 12px; padding: 12px; font-size: 16px; font-weight: 700; transition: 0.2s; text-decoration: none; display: block; text-align: center; }
+        .admin-btn-update:hover { background: #1d4ed8; color: white; transform: scale(1.02); }
+        
+        .admin-btn-delete { background: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; border-radius: 12px; padding: 12px; font-size: 16px; font-weight: 700; transition: 0.2s; text-decoration: none; display: block; text-align: center; }
+        .admin-btn-delete:hover { background: #b91c1c; color: white; transform: scale(1.02); }
+        
+        .text-muted { font-size: 15px; line-height: 1.7; color: #475569 !important; }
+        
+        .carousel-control-prev-icon, .carousel-control-next-icon { background-color: #0f172a; border-radius: 50%; padding: 20px; }
+        
+        /* ZOOM SYSTEM */
+        .zoom-controls { position: absolute; top: 20px; right: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; }
+        
+        .zoom-btn { width: 50px; height: 50px; border: none; border-radius: 50%; font-size: 28px; font-weight: bold; background: white; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+        
+        .zoom-btn:hover { background: #ddd; }
+        
+        #zoomImage { transition: transform 0.2s ease; }

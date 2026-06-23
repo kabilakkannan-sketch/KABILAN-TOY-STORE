@@ -1,0 +1,146 @@
+        :root {
+            --main-bg: #e2e8f0; 
+            --navbar-bg: #0f172a;
+            --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+            --primary-accent: #4f46e5;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--main-bg);
+            color: #1e293b;
+            padding-bottom: 50px;
+        }
+
+        /* TOP NAVBAR */
+        .top-navbar {
+            background-color: var(--navbar-bg);
+            padding: 15px 0;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .navbar-brand-custom {
+            color: #ffffff;
+            font-size: 20px;
+            font-weight: 800;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-links-custom {
+            display: flex;
+            gap: 15px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            align-items: center;
+        }
+
+        .nav-links-custom a {
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+
+        .nav-links-custom a:hover, .nav-links-custom a.active {
+            color: #ffffff;
+            background-color: rgba(255, 255, 255, 0.08);
+        }
+
+        /* ENQUIRY MAIN CONTAINER */
+        .data-panel {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 35px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            border: 1px solid #cbd5e1;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .data-panel h2 {
+            font-size: 22px;
+            font-weight: 800;
+            color: #0f172a;
+            letter-spacing: -0.5px;
+        }
+
+        /* ENQUIRY CARD ROW LISTS */
+        .enquiry-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            padding: 16px 20px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.2s ease;
+        }
+
+        .enquiry-card:hover {
+            border-color: var(--primary-accent);
+            background: #ffffff;
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.05);
+            transform: translateY(-1px);
+        }
+
+        .product-meta-box {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .product-meta-box img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 1px solid #cbd5e1;
+            background: white;
+        }
+
+        .toy-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 2px;
+        }
+
+        .user-tag {
+            font-size: 12px;
+            color: #64748b;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* ANSWER BUTTON SYSTEM */
+        .answer-btn {
+            background-color: #eff6ff;
+            color: #1d4ed8;
+            border: 1px solid #bfdbfe;
+            padding: 8px 18px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+        }
+
+        .answer-btn:hover {
+            background-color: #1d4ed8;
+            color: white;
+            box-shadow: 0 4px 10px rgba(29, 78, 216, 0.2);
+        }

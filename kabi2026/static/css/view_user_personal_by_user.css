@@ -1,0 +1,50 @@
+        body{
+            background:#f4f6f9;
+            font-family:Arial, sans-serif;
+        }
+
+        .profile-box{
+            max-width:500px;
+            margin:80px auto;
+            background:white;
+            padding:35px;
+            border-radius:18px;
+            box-shadow:0 8px 25px rgba(0,0,0,0.12);
+        }
+
+        .profile-title{
+            text-align:center;
+            font-size:28px;
+            font-weight:bold;
+            color:#333;
+            margin-bottom:25px;
+        }
+
+        .detail-row{
+            padding:12px 15px;
+            margin-bottom:12px;
+            background:#f8f9fa;
+            border-radius:10px;
+            font-size:17px;
+        }
+
+        .label{
+            font-weight:bold;
+            color:#555;
+        }
+
+        .update-btn{
+            display:block;
+            text-align:center;
+            margin-top:20px;
+            background:#0d6efd;
+            color:white;
+            text-decoration:none;
+            padding:10px;
+            border-radius:10px;
+            font-weight:bold;
+        }
+
+        .update-btn:hover{
+            background:#0b5ed7;
+        }

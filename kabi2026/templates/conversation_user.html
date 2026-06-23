@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat with Toy Help Desk</title>
+    <style>
+        .layout-container { display: flex; gap: 25px; font-family: sans-serif; margin: 20px; }
+        .chat-column { flex: 2; padding: 20px; border: 1px solid #ddd; border-radius: 8px; }
+        .product-column { flex: 1; padding: 20px; background-color: #fafbfc; border: 1px solid #e1e4e6; border-radius: 8px; position: sticky; top: 20px; }
+        .message-bubble { padding: 10px 14px; margin: 10px 0; border-radius: 6px; max-width: 85%; line-height: 1.4; }
+        .user-bubble { background-color: #e3f2fd; align-self: flex-end; margin-left: auto; text-align: right; }
+        .admin-bubble { background-color: #f1f8e9; align-self: flex-start; margin-right: auto; text-align: left; }
+    </style>
+</head>
+<body>
+<a href="javascript:history.back()" 
+   style="display: inline-flex; 
+          align-items: center; 
+          gap: 8px; 
+          padding: 10px 18px; 
+          background-color: #ffffff; 
+          color: #333333; 
+          text-decoration: none; 
+          font-family: 'Poppins', sans-serif; 
+          font-size: 14px;
+          margin-top: 20px;
+          margin-left: 20px;
+          font-weight: 600; 
+          border-radius: 12px; 
+          border: 1px solid #e5e7eb; 
+          box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.06); 
+          cursor: pointer; 
+          transition: all 0.2s ease;
+          margin-bottom: 20px;"
+   onmouseover="this.style.backgroundColor='#f3f4f6'; this.style.transform='translateY(-1px)'; this.style.boxShadow='0 10px 15px -3px rgba(0, 0, 0, 0.1)';" 
+   onmouseout="this.style.backgroundColor='#ffffff'; this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 6px -1px rgba(0, 0, 0, 0.05)';"
+   onmousedown="this.style.transform='scale(0.98)';">
+    
+    <i class="fa-solid fa-arrow-left" style="font-size: 14px; color: #4f46e5;"></i> 
+    Back
+</a>
+
+<div class="layout-container">
+    
+    <div class="chat-column">
+        <h3>Conversation Workspace</h3>
+        <hr>
+        <div style="min-height: 280px; max-height: 480px; overflow-y: auto; display: flex; flex-direction: column; padding: 5px;">
+            {% for chat in chats %}
+                {% if chat.sender == 'user' %}
+                    <div class="message-bubble user-bubble">
+                        <strong>You:</strong> {{ chat.message }}
+                    </div>
+                {% else %}
+                    <div class="message-bubble admin-bubble">
+                        <strong>Admin Support:</strong> {{ chat.message }}
+                    </div>
+                {% endif %}
+            {% empty %}
+                <p>No conversation history found. Ask your question below.</p>
+            {% endfor %}
+        </div>
+
+        <hr>
+        <form method="POST" style="margin-top: 15px;">
+            {% csrf_token %}
+            <input type="text" name="message" placeholder="Type your message to Admin..." required style="width: 75%; padding: 10px; border-radius: 4px; border: 1px solid #ccc;">
+            <button type="submit" style="padding: 10px 20px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;"> Send Message </button>
+        </form>
+    </div>
+
+    <div class="product-column">
+        <h3>Product Item Context</h3>
+        <hr>
+        {% if product.photo %}
+            <img src="{{ product.photo.url }}" width="100%" style="max-width: 200px; border-radius: 6px; display: block; margin-bottom: 15px; border: 1px solid #ddd;">
+        {% endif %}
+        <p><strong>Name:</strong> {{ product.toy_name }}</p>
+        <p><strong>Price:</strong> ₹{{ product.new_price }}</p>
+        <p><strong>Offer:</strong> {{ product.offer }}% OFF</p>
+        <p><strong>Description:</strong> {{ product.discription }}</p>
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,121 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Wallet System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/wallet_system_for_user.css' %}">
+
+</head>
+<body>
+<a href="javascript:history.back()" 
+   style="display: inline-flex; 
+          align-items: center; 
+          gap: 8px; 
+          padding: 10px 18px; 
+          background-color: #ffffff; 
+          color: #333333; 
+          text-decoration: none; 
+          font-family: 'Poppins', sans-serif; 
+          font-size: 14px;
+          margin-top: 20px;
+          margin-left: 20px;
+          font-weight: 600; 
+          border-radius: 12px; 
+          border: 1px solid #e5e7eb; 
+          box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.06); 
+          cursor: pointer; 
+          transition: all 0.2s ease;
+          margin-bottom: 20px;"
+   onmouseover="this.style.backgroundColor='#f3f4f6'; this.style.transform='translateY(-1px)'; this.style.boxShadow='0 10px 15px -3px rgba(0, 0, 0, 0.1)';" 
+   onmouseout="this.style.backgroundColor='#ffffff'; this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 6px -1px rgba(0, 0, 0, 0.05)';"
+   onmousedown="this.style.transform='scale(0.98)';">
+    
+    <i class="fa-solid fa-arrow-left" style="font-size: 14px; color: #4f46e5;"></i> 
+    Back
+</a>
+<div class="wallet-container">
+    <div class="wallet-header">
+        <i class="fa-solid fa-wallet"></i>
+        <h1>My Digital Wallet</h1>
+    </div>
+
+    <div id="alertBox" class="alert-msg alert-danger" style="display: none;">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+        <span id="alertText">Warning Message Here</span>
+    </div>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert-msg {% if message.tags == 'error' %}alert-danger{% else %}alert-success{% endif %}">
+                {% if message.tags == 'error' %}
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                {% else %}
+                    <i class="fa-solid fa-circle-check"></i>
+                {% endif %}
+                <span>{{ message }}</span>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <div class="balance-card">
+        <p>Available Balance</p>
+        <h2>₹{{ wallet.balance|default:"0.00" }}</h2>
+    </div>
+
+    <form method="POST" action="{% url 'wallet_system_for_user' %}" id="walletForm" onsubmit="return validateTransaction(event)">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="amountInput">Enter Transaction Amount</label>
+            <div class="input-wrapper">
+                <span>₹</span>
+                <input type="number" id="amountInput" name="amount" step="0.01" min="1" placeholder="0.00" required>
+            </div>
+        </div>
+
+        <input type="hidden" name="action" id="actionInput" value="deposit">
+
+        <div class="btn-container">
+            <button type="submit" class="btn btn-deposit" onclick="setAction('deposit')">
+                <i class="fa-solid fa-circle-plus"></i> Add Money
+            </button>
+            
+            <button type="submit" class="btn btn-withdraw" onclick="setAction('withdraw')">
+                <i class="fa-solid fa-circle-minus"></i> Withdraw Money
+            </button>
+        </div>
+    </form>
+</div>
+
+<script>
+    const availableBalance = parseFloat("{{ wallet.balance|default:'0.00' }}");
+
+    function setAction(actionType) {
+        document.getElementById('actionInput').value = actionType;
+    }
+
+    function validateTransaction(event) {
+        const action = document.getElementById('actionInput').value;
+        const amount = parseFloat(document.getElementById('amountInput').value);
+        const alertBox = document.getElementById('alertBox');
+        const alertText = document.getElementById('alertText');
+        alertBox.style.display = 'none';
+
+        if (action === 'withdraw') {
+            if (amount > availableBalance) {
+                event.preventDefault();
+                alertText.innerText = "Insufficient Funds! You cannot withdraw more than ₹" + availableBalance.toFixed(2);
+                alertBox.className = "alert-msg alert-danger";
+                alertBox.style.display = 'flex';                
+                return false;
+            }
+        }
+        return true;
+    }
+</script>
+
+</body>
+</html>

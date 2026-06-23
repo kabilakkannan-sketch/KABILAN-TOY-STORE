@@ -1,0 +1,81 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KK Shopping - Customer Enquiry Desk</title>
+    <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
+    <link rel="stylesheet" href="{% static 'css/admin_chat_lists.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    
+</head>
+<body>
+
+    <!-- TOP NAVBAR NAVIGATION -->
+    <nav class="top-navbar">
+        <div class="container-fluid px-5 d-flex justify-content-between align-items-center">
+            <a class="navbar-brand-custom" href="{% url 'admin_home' %}">
+                <i class="fa-solid fa-square-poll-horizontal text-primary"></i>
+                <span>KK SHOPPING CONTROL</span>
+            </a>
+            <ul class="nav-links-custom">
+                <li><a href="{% url 'admin_home' %}">Dashboard</a></li>
+                <li><a href="{% url 'orders_view_by_admin' %}">User Orders</a></li>
+                <li><a href="{% url 'view_users_by_admin' %}">Users Base</a></li>
+                <li><a href="{% url 'view_toys_by_category_admin' 'sleeping' %}">Sleeping</a></li>
+                <li><a href="{% url 'view_toys_by_category_admin' 'sports' %}">Sports</a></li>
+                <li><a href="{% url 'view_toys_by_category_admin' 'anime' %}">Anime</a></li>
+                <li><a href="{% url 'view_toys_by_category_admin' 'robotic' %}">Robotic</a></li>
+                <li><a href="{% url 'view_toys_by_category_admin' 'ai' %}">AI Toys</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- MAIN INTERFACE PANEL -->
+    <div class="container">
+        <div class="data-panel">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2><i class="fa-solid fa-headset text-primary me-2"></i>Live Customer Enquiry Streams</h2>
+                <span class="badge bg-light text-dark border px-3 py-2 rounded-pill fw-bold" style="font-size: 12px;">Active Logs: {{ chat_data|length }}</span>
+            </div>
+            
+            <div class="enquiry-stream mt-2">
+                {% for i in chat_data %}
+                <div class="enquiry-card">
+                    <div class="product-meta-box">
+                        <!-- பொருளின் படம் தானாகவே பின்தளத்தில் இருந்து இணையும் -->
+                        {% if i.product.photo %}
+                        <img src="{{ i.product.photo.url }}" alt="Toy">
+                        {% else %}
+                        <div class="bg-secondary rounded" style="width:50px; height:50px;"></div>
+                        {% endif %}
+                        
+                        <div>
+                            <div class="toy-title">{{ i.product.toy_name }}</div>
+                            <div class="user-tag">
+                                <i class="fa-solid fa-user-gear text-secondary" style="font-size: 11px;"></i> {{ i.user_name }}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <a href="{% url 'admin_reply' product_id=i.product.id user_id=i.user_id %}" class="answer-btn">
+                            <i class="fa-solid fa-reply"></i> Answer Enquiry
+                        </a>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="text-center text-muted py-5">
+                    <i class="fa-solid fa-comment-slash d-block fs-2 mb-3" style="opacity: 0.5;"></i>
+                    <h5 class="fw-medium">No live queries or product doubts listed at the moment.</h5>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

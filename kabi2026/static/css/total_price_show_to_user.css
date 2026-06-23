@@ -1,0 +1,74 @@
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #e2e8f0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .checkout-box {
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15);
+            border: 1px solid #cbd5e1;
+            overflow: hidden;
+            max-width: 850px;
+            width: 100%;
+        }
+        .product-side {
+            background-color: #f8fafc;
+            padding: 40px;
+            border-right: 1px solid #e2e8f0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        .product-img {
+            max-height: 220px;
+            object-fit: contain;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+        .form-side {
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .price-total {
+            color: #16a34a;
+            font-size: 32px;
+            font-weight: 900;
+        }
+        .wallet-panel {
+            background-color: #f3e8ff;
+            border: 1px solid #e9d5ff;
+            border-radius: 14px;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: #6b21a8;
+        }
+        .btn-confirm {
+            background-color: #10b981;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 14px;
+            font-size: 16px;
+            font-weight: 700;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .btn-confirm:hover {
+            background-color: #059669;
+            box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.3);
+        }

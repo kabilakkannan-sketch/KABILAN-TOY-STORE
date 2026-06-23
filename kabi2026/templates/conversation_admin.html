@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard Workspace</title>
+    <style>
+        .layout-container { display: flex; gap: 25px; font-family: sans-serif; margin: 20px; }
+        .chat-column { flex: 2; padding: 20px; border: 1px solid #ddd; border-radius: 8px; }
+        .product-column { flex: 1; padding: 20px; background-color: #f7f9fa; border: 1px solid #e1e4e6; border-radius: 8px; position: sticky; top: 20px; }
+        .message-bubble { padding: 10px 14px; margin: 10px 0; border-radius: 6px; max-width: 85%; }
+        .user-bubble { background-color: #e3f2fd; align-self: flex-start; }
+        .admin-bubble { background-color: #e8f5e9; align-self: flex-end; }
+    </style>
+</head>
+<body>
+
+<div class="layout-container">
+    
+    <!-- LEFT PANEL: MESSAGES -->
+    <div class="chat-column">
+        <h3>Chat History </h3>
+        <hr>
+        <div style="min-height: 250px; max-height: 450px; overflow-y: auto; display: flex; flex-direction: column;">
+            {% for chat in chats %}
+                {% if chat.sender == 'user' %}
+                    <div class="message-bubble user-bubble">
+                        <strong>User:</strong> {{ chat.message }}
+                    </div>
+                {% else %}
+                    <div class="message-bubble admin-bubble">
+                        <strong>Admin:</strong> {{ chat.message }}
+                    </div>
+                {% endif %}
+            {% empty %}
+                <p>No conversation history found</p>
+            {% endfor %}
+        </div>
+
+        <hr>
+        <form method="POST" style="margin-top: 15px;">
+            {% csrf_token %}
+            <input type="text" name="message" placeholder="Type your reply... " required style="width: 75%; padding: 10px; border-radius: 4px; border: 1px solid #ccc;">
+            <button type="submit" style="padding: 10px 20px; background-color: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;"> Send </button>
+        </form>
+    </div>
+
+    <div class="product-column">
+        <h3> Product Details </h3>
+        <hr>
+        {% if product.photo %}
+            <img src="{{ product.photo.url }}" width="100%" style="max-width: 220px; border-radius: 6px; display: block; margin-bottom: 15px;">
+        {% endif %}
+        <p><strong>Name :</strong> {{ product.toy_name }}</p>
+        <p><strong>Price: </strong> ₹{{ product.new_price }}</p>
+        <p><strong>Offer :</strong> {{ product.offer }}</p>
+        <p><strong>Description :</strong> {{ product.discription }}</p>
+    </div>
+
+</div>
+
+</body>
+</html>

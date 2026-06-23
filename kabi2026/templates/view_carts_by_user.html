@@ -1,0 +1,64 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Cart</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<style>
+body{ background:#eef1f5; }
+.cart-box{ background:white; padding:20px; border-radius:18px; margin-bottom:20px; box-shadow:0 5px 15px rgba(0,0,0,0.08); }
+.cart-img{ width:120px; height:120px; object-fit:contain; }
+.price{ color:#ff5722; font-size:24px; font-weight:bold; }
+.empty{ text-align:center; margin-top:100px; font-size:25px; color:gray; }
+.summary-box{ background:white; padding:20px; border-radius:18px; margin-bottom:20px; box-shadow:0 5px 15px rgba(0,0,0,0.08); text-align:center; }
+.checkout-btn{ font-size:20px; font-weight:bold; width:100%; margin-top:15px; }
+.qty-btn{ width:45px; }
+</style>
+</head>
+<body>
+
+<div class="container py-5">
+    <h1 class="mb-4 text-center">My Cart</h1>
+
+    {% if cart_data %}
+    <div class="summary-box">
+        <h3>Total Products : {{ cart_data|length }}</h3>
+        <h2>Total Amount : ₹{{ total }}</h2>
+        <a href="{% url 'cart_checkout' %}" class="btn btn-success checkout-btn">Place Combo Order</a>
+    </div>
+
+    {% for item in cart_data %}
+    <div class="cart-box">
+        <div class="row align-items-center">
+            <div class="col-md-3 text-center">
+                {% if item.product.photo %}
+                    <img src="{{ item.product.photo.url }}" class="cart-img">
+                {% else %}
+                    <p>No Image Available</p>
+                {% endif %}
+            </div>
+            <div class="col-md-5">
+                <h3>{{ item.product.toy_name }}</h3>
+                <p class="price">₹{{ item.product.new_price }}</p>
+                <p>Quantity : {{ item.qty }}</p>
+                <p>Subtotal : ₹{{ item.subtotal }}</p>
+            </div>
+            <div class="col-md-4">
+                <a href="{% url 'increase_qty' item.cart_id %}" class="btn btn-success qty-btn">+</a>
+                <a href="{% url 'decrease_qty' item.cart_id %}" class="btn btn-warning qty-btn">-</a>
+                <a href="{% url 'remove_cart' item.cart_id %}" class="btn btn-danger">Remove</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+    {% else %}
+    <div class="empty">Cart Is Empty</div>
+    {% endif %}
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

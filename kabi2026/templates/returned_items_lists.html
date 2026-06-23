@@ -1,0 +1,65 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Admin - Returned Products</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="{% static 'css/returned_items_lists.css' %}">
+
+</head>
+<body>
+
+<div class="container">
+    <h2><i class="fa-solid fa-boxes-packing"></i> Returned Products Dashboard</h2>
+    <p class="subtitle">Overview of returned products and detailed return transactions.</p>
+
+    <h3 style="color: #475569;"><i class="fa-solid fa-chart-pie"></i> Product-wise Return Summary</h3>
+    <div class="grid-container">
+        {% for item in returned_items %}
+        <div class="summary-card">
+            {% if item.product_photo %}
+                <img src="/media/{{ item.product_photo }}" alt="Product">
+            {% else %}
+                <div style="width:60px; height:60px; background:#e2e8f0; border-radius:8px; display:flex; align-items:center; justify-content:center;"><i class="fa-solid fa-image"></i></div>
+            {% endif %}
+            <div class="summary-info">
+                <h4>{{ item.product_name }}</h4>
+                <span class="qty-badge">Total Returned: {{ item.total_returned_qty }} Qty</span>
+                <div style="font-size: 11px; color:#94a3b8; margin-top:4px;">Orders: {{ item.total_returned_orders }} times</div>
+            </div>
+        </div>
+        {% empty %}
+        <p style="color: #94a3b8;">No summary data available.</p>
+        {% endfor %}
+    </div>
+
+    <h3 style="color: #475569;"><i class="fa-solid fa-list"></i> Detailed Return Transactions</h3>
+    <table>
+        <tr>
+            <th>Order ID</th>
+            <th>Product Name</th>
+            <th>Returned Quantity</th>
+            <th>Price</th>
+            <th>User ID</th>
+            <th>Action Status</th>
+        </tr>
+        {% for log in detailed_returns %}
+        <tr>
+            <td>#{{ log.id }}</td>
+            <td><strong>{{ log.product_name }}</strong></td>
+            <td>{{ log.order_quantity }}</td>
+            <td>₹{{ log.price }}</td>
+            <td>User #{{ log.user_id }}</td>
+            <td><span class="status-badge"><i class="fa-solid fa-rotate-left"></i> Returned</span></td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="6"> Nothing is ruturned </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,221 @@
+        :root {
+            --main-bg: #e2e8f0; 
+            --navbar-bg: #0f172a;
+            --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--main-bg);
+            color: #1e293b;
+            padding-bottom: 50px;
+        }
+
+        /* TOP NAVBAR */
+        .top-navbar {
+            background-color: var(--navbar-bg);
+            padding: 15px 0;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .navbar-brand-custom {
+            color: #ffffff;
+            font-size: 20px;
+            font-weight: 800;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-links-custom {
+            display: flex;
+            gap: 15px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            align-items: center;
+        }
+
+        .nav-links-custom a {
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+
+        .nav-links-custom a:hover, .nav-links-custom a.active {
+            color: #ffffff;
+            background-color: rgba(255, 255, 255, 0.08);
+        }
+
+        /* STATS COUNTER BLOCKS */
+        .stats-grid {
+            display: grid;
+            /* 5 கார்டுகள் கச்சிதமாக அமையும்படி மாற்றப்பட்டுள்ளது */
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .stat-box {
+            background: #ffffff;
+            padding: 15px 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+            border: 1px solid #cbd5e1;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            text-decoration: none;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        /* லிங்க் கார்டாக மாறும்போது ஏற்படும் அனிமேஷன் */
+        a.stat-box:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            border-color: #fca5a5;
+        }
+
+        .stat-info h3 {
+            font-size: 11px;
+            text-transform: uppercase;
+            color: #64748b;
+            font-weight: 700;
+            margin-bottom: 4px;
+            letter-spacing: 0.5px;
+        }
+
+        .stat-info p {
+            font-size: 22px;
+            font-weight: 800;
+            margin: 0;
+            color: #0f172a;
+        }
+
+        .stat-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        .si-total { background-color: #f1f5f9; color: #475569; }
+        .si-confirm { background-color: #e6f4ea; color: #137333; }
+        .si-ship { background-color: #e8f0fe; color: #1a73e8; }
+        .si-deliver { background-color: #f3e8ff; color: #7c3aed; }
+        .si-return { background-color: #fee2e2; color: #dc3545; } /* புதிய ரிட்டர்ன் ஸ்டைல் */
+
+        /* DATA PANEL */
+        .data-panel {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: var(--card-shadow);
+            border: 1px solid #cbd5e1;
+        }
+
+        .data-panel h2 {
+            font-size: 20px;
+            font-weight: 800;
+            color: #0f172a;
+        }
+
+        .table-responsive {
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #cbd5e1;
+        }
+
+        .table-custom th {
+            background-color: #f8fafc;
+            color: #475569;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 11px;
+            padding: 16px 10px;
+            text-align: center;
+        }
+
+        .table-custom td {
+            padding: 12px 10px;
+            vertical-align: middle;
+            font-size: 13.5px;
+            color: #334155;
+            text-align: center;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .table-custom img {
+            width: 46px;
+            height: 46px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+        }
+
+        /* TOP TO BOTTOM VERTICAL BUTTONS DECK */
+        .actions-vertical-deck {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            width: 150px; 
+            margin: 0 auto;
+        }
+
+        .action-btn {
+            font-size: 10.5px;
+            font-weight: 700;
+            padding: 5px 8px;
+            border-radius: 6px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.2s;
+        }
+
+        .confirm-btn { background:#e6f4ea; color:#137333; border: 1px solid #b7e1cd; }
+        .confirm-btn:hover { background:#137333; color:white; }
+
+        .ship-btn { background:#e8f0fe; color:#1a73e8; border: 1px solid #c2e7ff; }
+        .ship-btn:hover { background:#1a73e8; color:white; }
+
+        .arrive-btn { background:#fef7e0; color:#b06000; border: 1px solid #fde293; }
+        .arrive-btn:hover { background:#b06000; color:white; }
+
+        .deliver-btn { background:#f3e8ff; color:#7c3aed; border: 1px solid #e9d5ff; }
+        .deliver-btn:hover { background:#7c3aed; color:white; }
+
+        .user-btn {
+            background: #f8fafc;
+            color: #475569;
+            border: 1px solid #cbd5e1;
+            font-size: 11px;
+            padding: 6px 10px;
+            font-weight: 600;
+        }
+        .user-btn:hover { background: #475569; color: white; }
+
+        .status-ok {
+            color: #137333;
+            font-weight: bold;
+            font-size: 10px;
+        }
+
+        .badge-action-status {
+            font-size: 10.5px;
+            font-weight: 700;
+            padding: 4px 8px;
+            border-radius: 6px;
+            text-transform: uppercase;
+        }
+    

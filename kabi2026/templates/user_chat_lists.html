@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Product Enquiries</title>
+</head>
+<body style="font-family: sans-serif; margin: 30px;">
+<a href="javascript:history.back()" 
+   style="display: inline-flex; 
+          align-items: center; 
+          gap: 8px; 
+          padding: 10px 18px; 
+          background-color: #ffffff; 
+          color: #333333; 
+          text-decoration: none; 
+          font-family: 'Poppins', sans-serif; 
+          font-size: 14px;
+          margin-top: 20px;
+          margin-left: 20px;
+          font-weight: 600; 
+          border-radius: 12px; 
+          border: 1px solid #e5e7eb; 
+          box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.06); 
+          cursor: pointer; 
+          transition: all 0.2s ease;
+          margin-bottom: 20px;"
+   onmouseover="this.style.backgroundColor='#f3f4f6'; this.style.transform='translateY(-1px)'; this.style.boxShadow='0 10px 15px -3px rgba(0, 0, 0, 0.1)';" 
+   onmouseout="this.style.backgroundColor='#ffffff'; this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 6px -1px rgba(0, 0, 0, 0.05)';"
+   onmousedown="this.style.transform='scale(0.98)';">
+    
+    <i class="fa-solid fa-arrow-left" style="font-size: 14px; color: #4f46e5;"></i> 
+    Back
+</a>
+    <h2>Your Product Conversations </h2>
+    <hr>
+
+    {% for i in chat_data %}
+    <p style="padding: 15px; border-bottom: 1px solid #ddd; background: #fff; border-radius: 6px;">
+        <strong>{{ i.product.toy_name }}</strong> 
+        <span style="color:#666; margin-left: 10px;">(Price: ₹{{ i.product.new_price }})</span> — 
+        
+        <a href="{% url 'conversation_user' product_id=i.product_id user_id=request.session.user_id %}" 
+           style="background-color: #28a745; color: white; padding: 6px 15px; text-decoration: none; border-radius: 4px; font-weight: bold; margin-left: 15px;">
+            Open Chat 
+        </a>
+    </p>
+    {% empty %}
+    <p>You haven't initiated any inquiries yet </p>
+    {% endfor %}
+
+</body>
+</html>

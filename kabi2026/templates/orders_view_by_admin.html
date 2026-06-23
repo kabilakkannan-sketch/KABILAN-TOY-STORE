@@ -1,0 +1,158 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KK Shopping - Order Fulfillment Console</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/orders_view_by_admin.css' %}">
+</head>
+<body>
+
+    <nav class="top-navbar">
+        <div class="container-fluid px-5 d-flex justify-content-between align-items-center">
+            <a class="navbar-brand-custom" href="{% url 'admin_home' %}">
+                <i class="fa-solid fa-square-poll-horizontal text-primary"></i>
+                <span>KK SHOPPING CONTROL</span>
+            </a>
+            <ul class="nav-links-custom">
+                <li><a href="{% url 'admin_home' %}">Dashboard</a></li>
+                <li><a href="{% url 'orders_view_by_admin' %}" class="active">User Orders</a></li>
+                <li><a href="{% url 'view_users_by_admin' %}">Users Base</a></li>
+                <li><a href="{% url 'view_toys_by_category_admin' 'sleeping' %}">Sleeping</a></li>
+                <li><a href="{% url 'view_toys_by_category_admin' 'sports' %}">Sports</a></li>
+                <li><a href="{% url 'view_toys_by_category_admin' 'anime' %}">Anime</a></li>
+                <li><a href="{% url 'view_toys_by_category_admin' 'robotic' %}">Robotic</a></li>
+                <li><a href="{% url 'view_toys_by_category_admin' 'ai' %}">AI Toys</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container-fluid px-5">
+        
+        <div class="stats-grid">
+            <div class="stat-box">
+                <div class="stat-info">
+                    <h3>Total Pipeline</h3>
+                    <p>{{ data|length }}</p>
+                </div>
+                <div class="stat-icon si-total"><i class="fa-solid fa-boxes-stacked"></i></div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-info">
+                    <h3>Confirmed</h3>
+                    <p>{{ confirmed_count|default:"0" }}</p>
+                </div>
+                <div class="stat-icon si-confirm"><i class="fa-solid fa-circle-check"></i></div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-info">
+                    <h3>Shipped Log</h3>
+                    <p>{{ shipped_count|default:"0" }}</p>
+                </div>
+                <div class="stat-icon si-ship"><i class="fa-solid fa-truck-fast"></i></div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-info">
+                    <h3>Delivered</h3>
+                    <p>{{ delivered_count|default:"0" }}</p>
+                </div>
+                <div class="stat-icon si-deliver"><i class="fa-solid fa-house-chimney-check"> 🏍✔</i></div>
+            </div>
+            
+            <a href="{% url 'admin_returned_orders' %}" class="stat-box">
+                <div class="stat-info">
+                    <h3>User Returns</h3>
+                </div>
+                <div class="stat-icon si-return"><i class="fa-solid fa-boxes-packing"></i></div>
+            </a>
+        </div>
+
+        <div class="data-panel">
+            <h2 class="mb-4"><i class="fa-solid fa-list-check text-primary me-2"></i>Live Orders Stream Registry</h2>
+            <div class="table-responsive">
+                <table class="table table-custom align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th>Product Name</th>
+                            <th>Photo</th>
+                            <th>Stock</th>
+                            <th>Req</th>
+                            <th>Price</th>
+                            <th>Status Log</th>
+                            <th>Action Status</th>
+                            <th>Order Time</th>
+                            <th>Pipeline Stage Controls</th>
+                            <th>Client Profile</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in data %}
+                        <tr>
+                            <td class="fw-semibold text-dark text-start text-truncate" style="max-width: 130px;">{{ i.product_name }}</td>
+                            <td>
+                                <img src="{{ i.product_photo.url }}" alt="image">
+                            </td>
+                            <td><span class="text-muted">{{ i.order_quantity }} pcs</span></td>
+                            <td><span class="badge bg-light text-dark border fw-bold">{{ i.user_quantity }}</span></td>
+                            <td class="fw-bold text-dark">₹{{ i.price }}</td>
+                            <td>
+                                <span class="badge bg-light text-secondary border fw-medium" style="font-size: 11px;">{{ i.status }}</span>
+                            </td>
+                            <td>
+                                <!-- Returned நிலைக்கு புதிய வண்ணப் பேட்ஜ் சேர்க்கப்பட்டுள்ளது -->
+                                <span class="badge-action-status 
+                                    {% if i.action_status == 'cancelled' %}bg-danger-subtle text-danger
+                                    {% elif i.action_status == 'delivered' %}bg-success-subtle text-success
+                                    {% elif i.action_status == 'returned' %}bg-danger-subtle text-danger style='border: 1px dashed red;'
+                                    {% else %}bg-warning-subtle text-warning{% endif %}">
+                                    {{ i.action_status|default:"pending" }}
+                                </span>
+                            </td>
+                            <td style="font-size: 12px; color: #64748b;">{{ i.created_at|default:"Old Order" }}</td>
+                            
+                            <td>
+                                <div class="actions-vertical-deck">
+                                    <a class="action-btn confirm-btn" href="{% url 'update_order_status' i.id 'Confirmed' %}">
+                                        <span>Confirm</span> {% if "Confirmed" in i.status %}<span class="status-ok">✔</span>{% endif %}
+                                    </a>
+                                    
+                                    <a class="action-btn ship-btn" href="{% url 'update_order_status' i.id 'Shipped' %}">
+                                        <span>Ship</span> {% if "Shipped" in i.status %}<span class="status-ok">✔</span>{% endif %}
+                                    </a>
+                                    
+                                    <a class="action-btn arrive-btn" href="{% url 'update_order_status' i.id 'Arrived' %}">
+                                        <span>Arrive</span> {% if "Arrived" in i.status %}<span class="status-ok">✔</span>{% endif %}
+                                    </a>
+                                    
+                                    <a class="action-btn deliver-btn" href="{% url 'update_order_status' i.id 'Delivered' %}">
+                                        <span>Deliver</span> {% if "Delivered" in i.status %}<span class="status-ok">✔</span>{% endif %}
+                                    </a>
+                                </div>
+                            </td>
+                            
+                            <td>
+                                <a class="btn user-btn action-btn" href="{% url 'ordered_user_details' i.id %}">
+                                    <i class="fa-solid fa-address-card me-1"></i> Profile
+                                </a>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="10" class="text-center text-muted py-4">
+                                <i class="fa-solid fa-inbox fs-3 d-block mb-2"></i> Operational registers are currently clean.
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,82 @@
+    body {
+        font-family: Arial, sans-serif;
+        background: linear-gradient(to right, #f8fafc, #e2e8f0);
+        padding: 30px;
+    }
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    h2 {
+        color: #1e293b;
+        margin-bottom: 5px;
+    }
+    p.subtitle {
+        color: #64748b;
+        margin-bottom: 25px;
+    }
+    .grid-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 20px;
+        margin-bottom: 40px;
+    }
+    .summary-card {
+        background: white;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+    .summary-card img {
+        width: 60px;
+        height: 60px;
+        object-fit: cover;
+        border-radius: 8px;
+    }
+    .summary-info h4 {
+        margin: 0 0 5px 0;
+        color: #334155;
+    }
+    .summary-info .qty-badge {
+        background: #fee2e2;
+        color: #ef4444;
+        padding: 4px 8px;
+        border-radius: 6px;
+        font-size: 13px;
+        font-weight: bold;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        background: white;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+        border-radius: 12px;
+        overflow: hidden;
+    }
+    th {
+        background: #1e293b;
+        color: white;
+        padding: 14px;
+        font-size: 15px;
+        text-align: center;
+    }
+    td {
+        padding: 14px;
+        text-align: center;
+        border-bottom: 1px solid #e2e8f0;
+        color: #334155;
+    }
+    tr:hover {
+        background: #f8fafc;
+    }
+    .status-badge {
+        background: #dcfce7;
+        color: #15803d;
+        padding: 5px 10px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: bold;
+    }
